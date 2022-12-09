@@ -1,0 +1,10 @@
+<h1>Home</h1>
+
+<input type="button" routerLink="user/login" value="Login">
+
+
+<p>President tables</p>
+<input type="button" (click)="addPresiTable()" value="new table">
+<div *ngFor="let table of presiTableLIst">
+<input type="button" (click)="joinPresiTable(table.id)" value="players : {{table.players.length}}" >
+</div>
