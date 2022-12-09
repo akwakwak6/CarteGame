@@ -27,4 +27,9 @@ export class HomeComponent implements OnInit {
     this.presidentService.joinPresiTable(id)
   }
 
+  leaveTable(id:number){
+    console.log("leave table "+id)
+    this.presidentService.quitTable(id)
+  }
+
 }

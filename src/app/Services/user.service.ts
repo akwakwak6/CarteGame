@@ -22,7 +22,7 @@ export class UserService {
   }
 
   getPresiPlayer(tableId : number):PlayerModel{
-    this._player = this._user === null ? this._player = new PresiPlayerModel(tableId,"Visitor") : new PresiPlayerModel(tableId,this._user.pseudo)
+    this._player = this._user === null ? this._player = new PresiPlayerModel(1,tableId,"Visitor_1") : new PresiPlayerModel(this._user.id,tableId,this._user.pseudo)
     //TODO use subject => next here
     return this._player
   }

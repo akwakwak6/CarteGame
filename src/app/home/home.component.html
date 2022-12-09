@@ -7,4 +7,5 @@
 <input type="button" (click)="addPresiTable()" value="new table">
 <div *ngFor="let table of presiTableLIst">
 <input type="button" (click)="joinPresiTable(table.id)" value="players : {{table.players.length}}" >
+<input *ngIf="table.joined" type="button" (click)="leaveTable(table.id)" value="Quit" >
 </div>

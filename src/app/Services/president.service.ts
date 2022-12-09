@@ -17,7 +17,7 @@ export class PresidentService {
 
   createTable(){
     this._idTable ++
-    this._tableLIst.push( new PresiTableModel(this._idTable) )
+    this._tableLIst.push( new PresiTableListModel(this._idTable) )
     this._SubTableList.next(this._tableLIst)
   }
 
@@ -27,15 +27,38 @@ export class PresidentService {
 
   joinPresiTable(id:number){
 
-    let t = this._tableLIst.find( t => t.id === id )
+    let index = this._tableLIst.findIndex( t => t.id === id )
 
-    if( t === undefined ) return
+    if( index === -1 ) return
 
-    t.players.push( this._userService.getPresiPlayer(id) )
+    this._tableLIst[index].players.push( this._userService.getPresiPlayer(id) )
+    /*this._tableLIst = this._tableLIst.map( t => {} )
+    t.joined = true*/
+
+    //TODO set all joined to false then add good joined
+
+    this._SubTableList.next(this._tableLIst)
+
     
   }
 
-  quitTable(){
+  quitTable(id:number){
+
+    let ti = this._tableLIst.findIndex( t => t.id === id )
+
+    console.log(this._tableLIst[ti])
+
+    if( ti === -1 ) return
+
+    let i = this._tableLIst[ti].players.findIndex( p => p.id === 1 )
+
+    console.log(i)
+
+    if(i === -1) return
+
+    this._tableLIst[ti].players.splice(i,1)
+    this._SubTableList.next(this._tableLIst)
+
 
   }
 

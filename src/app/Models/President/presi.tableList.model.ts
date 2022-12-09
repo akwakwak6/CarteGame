@@ -2,6 +2,7 @@ import { PlayerModel } from "../player.model"
 import { TableListModel } from "../tableList.model"
 
 export class PresiTableListModel implements TableListModel {
+    joined: boolean = false
     id: number
     players: PlayerModel[]
 
@@ -9,4 +10,5 @@ export class PresiTableListModel implements TableListModel {
         this.id = id
         this.players = players
     }
+    
 }
