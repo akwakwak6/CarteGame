@@ -1,13 +1,19 @@
 import { PlayerModel } from "../player.model";
 import { TableModel } from "../table.model";
+import { PresiPlayerModel } from "./presi.player.model";
 
 export class PresiTableModel implements TableModel {
+    
     id: number
-    players: PlayerModel[]
+    
+    players: PresiPlayerModel[] = []
+    centerCarte : number = 0
+    playing : number = 0
+    myHand : [] = []
+    
 
-    constructor(id: number, players: PlayerModel[] = []) {
+    constructor(id: number) {
         this.id = id
-        this.players = players
     }
 
 }

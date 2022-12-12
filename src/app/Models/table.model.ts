@@ -1,5 +1,5 @@
-import { TableListModel } from "./tableList.model";
+
 
 export interface TableModel{
-    
+    id: number
 }

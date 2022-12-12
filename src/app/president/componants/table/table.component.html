@@ -1,5 +1,10 @@
 <p>president table works!</p>
 <p>{{id}}</p>
 
+<app-cards-center [cards]="centerCard"></app-cards-center>
 
+<app-hand [cards]="hand"></app-hand>
 
+<div *ngFor="let p of players">
+    <app-player [player]="p" ></app-player>
+</div>
