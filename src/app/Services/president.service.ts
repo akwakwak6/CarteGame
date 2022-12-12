@@ -11,55 +11,59 @@ export class PresidentService {
 
   private _idTable : number = 0
   private _tableLIst : PresiTableListModel[] = []
-  private _SubTableList : Subject<PresiTableListModel[]> = new Subject<PresiTableListModel[]>()
+  private _SubTableList$ : Subject<PresiTableListModel[]> = new Subject<PresiTableListModel[]>()
 
   constructor(private _userService : UserService) { }
 
   createTable(){
     this._idTable ++
     this._tableLIst.push( new PresiTableListModel(this._idTable) )
-    this._SubTableList.next(this._tableLIst)
+    this._SubTableList$.next(this._tableLIst)
   }
 
   getTables():Observable<PresiTableListModel[]>{
-    return this._SubTableList.asObservable()
+    return this._SubTableList$.asObservable()
   }
 
   joinPresiTable(id:number){
 
+    //find table
     let index = this._tableLIst.findIndex( t => t.id === id )
-
     if( index === -1 ) return
 
+    //leave all table
+    this._tableLIst = this._tableLIst.map( t => {
+      if(t.joined){
+        this.quitTable(t.id)
+        t.joined = false
+      }
+      return t
+    })
+    
+    //join table
     this._tableLIst[index].players.push( this._userService.getPresiPlayer(id) )
-    /*this._tableLIst = this._tableLIst.map( t => {} )
-    t.joined = true*/
+    this._tableLIst[index].joined = true
 
-    //TODO set all joined to false then add good joined
-
-    this._SubTableList.next(this._tableLIst)
+    //event
+    this._SubTableList$.next(this._tableLIst)
 
     
   }
 
-  quitTable(id:number){
 
-    let ti = this._tableLIst.findIndex( t => t.id === id )
-
-    console.log(this._tableLIst[ti])
-
-    if( ti === -1 ) return
-
-    let i = this._tableLIst[ti].players.findIndex( p => p.id === 1 )
-
-    console.log(i)
-
+  quitTableIndex(index:number):void{
+    let i = this._tableLIst[index].players.findIndex( p => p.id === 1 )//TODO use use id in userService
     if(i === -1) return
+    this._tableLIst[index].joined = false
+    this._tableLIst[index].players.splice(i,1)
+    this._SubTableList$.next(this._tableLIst)
+  }
 
-    this._tableLIst[ti].players.splice(i,1)
-    this._SubTableList.next(this._tableLIst)
-
-
+  //better use index, not ID
+  quitTable(id:number){
+    let ti = this._tableLIst.findIndex( t => t.id === id )
+    if( ti === -1 ) return
+    this.quitTableIndex(ti)
   }
 
   sendReady(){

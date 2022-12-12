@@ -28,8 +28,11 @@ export class HomeComponent implements OnInit {
   }
 
   leaveTable(id:number){
-    console.log("leave table "+id)
     this.presidentService.quitTable(id)
+  }
+
+  leaveTableIndex(index:number){
+    this.presidentService.quitTableIndex(index)
   }
 
 }

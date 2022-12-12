@@ -2,10 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PresidentRoutingModule } from './president-routing.module';
+import { TableComponent } from './componants/table/table.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    TableComponent
+  ],
   imports: [
     CommonModule,
     PresidentRoutingModule

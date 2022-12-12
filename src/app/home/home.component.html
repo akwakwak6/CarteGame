@@ -5,7 +5,8 @@
 
 <p>President tables</p>
 <input type="button" (click)="addPresiTable()" value="new table">
-<div *ngFor="let table of presiTableLIst">
-<input type="button" (click)="joinPresiTable(table.id)" value="players : {{table.players.length}}" >
-<input *ngIf="table.joined" type="button" (click)="leaveTable(table.id)" value="Quit" >
+<div *ngFor="let table of presiTableLIst;index as i">
+    <input type="button" (click)="joinPresiTable(table.id)" value="players : {{table.players.length}}">
+    <input *ngIf="table.joined" type="button" (click)="leaveTableIndex(i)" value="Quit">
+    <input *ngIf="table.joined" type="button" [routerLink]="['presi/table', table.id]" value="GO">
 </div>
