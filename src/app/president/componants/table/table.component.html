@@ -3,8 +3,8 @@
 
 <app-cards-center [cards]="centerCard"></app-cards-center>
 
-<app-hand [cards]="hand"></app-hand>
+<app-hand [cards]="hand" [playing]="playing"></app-hand>
 
 <div *ngFor="let p of players">
-    <app-player [player]="p" ></app-player>
+    <app-player [player]="p"></app-player>
 </div>

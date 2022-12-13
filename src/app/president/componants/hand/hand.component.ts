@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { HandCardModel } from 'src/app/Models/President/presi.handCard.model';
 
 @Component({
   selector: 'app-hand',
@@ -7,11 +8,13 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class HandComponent implements OnInit {
 
-  @Input() cards : number[] = []
+  @Input() cards : HandCardModel[] = []
+  @Input() playing : boolean = true
 
   constructor() { }
 
   ngOnInit(): void {
+    
   }
 
 }
