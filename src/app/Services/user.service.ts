@@ -2,23 +2,28 @@ import { Injectable } from '@angular/core';
 import { PlayerModel } from '../Models/player.model';
 import { PresiPlayerModel } from '../Models/President/presi.player.model';
 import { UserModel } from '../Models/User/user.login.model';
+import { HttpClient } from '@angular/common/http';
+import { UserLoginModel } from '../Models/User/user.sendLogin.model';
+import { UserRegisterModel } from '../Models/User/user.register.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
+  private _url : string = "http://localhost:7140/api/User/";//TODO put in share mod
+
   private _user : UserModel | null = null
   private _player : PlayerModel | null = null
 
-  constructor() { }
+  constructor(private _httpClient : HttpClient) { }
 
-  login(){
-
+  login(u:UserLoginModel){
+    this._httpClient.post<UserModel>(this._url+"login",u).subscribe( r => console.log(r) )
   }
 
-  register(){
-
+  register(u:UserRegisterModel){
+    this._httpClient.post<UserModel>(this._url+"register",u).subscribe( r => console.log(r) )
   }
 
   getPresiPlayer(tableId : number):PlayerModel{

@@ -1,6 +1,4 @@
-import { PlayerModel } from "../player.model";
 import { TableModel } from "../table.model";
-import { HandCardModel } from "./presi.handCard.model";
 import { PresiPlayerModel } from "./presi.player.model";
 
 export class PresiTableModel implements TableModel {
@@ -10,7 +8,7 @@ export class PresiTableModel implements TableModel {
     players: PresiPlayerModel[] = []
     centerCarte : number = 0
     playing : number = 0
-    myHand : HandCardModel[] = []
+    myHand : number[] = []
     
 
     constructor(id: number) {

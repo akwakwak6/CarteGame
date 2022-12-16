@@ -3,8 +3,10 @@
 
 <app-cards-center [cards]="centerCard"></app-cards-center>
 
-<app-hand [cards]="hand" [playing]="playing"></app-hand>
+<app-hand [cards]="hand" [playing]="playing" [centerCard]="centerCard"></app-hand>
 
 <div *ngFor="let p of players">
     <app-player [player]="p"></app-player>
 </div>
+
+<input type="button" value="Quit" (click)="quit()">

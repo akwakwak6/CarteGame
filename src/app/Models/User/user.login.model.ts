@@ -1,11 +1,7 @@
-export class UserModel {
+export interface UserModel {
 
     id : number 
-    pseudo: string
-
-    constructor(id:number, pseudo: string) {
-        this.id = id
-        this.pseudo = pseudo
-    }
+    pseudo : string
+    token : string
 
 }

@@ -1,34 +1,36 @@
 .mainDiv{
     display: flex;
     flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    //flex-direction: row-reverse;
+}
+
+.mainDiv div{
     height: 20vh;
+    filter: invert(0);
 }
 
-.mainDiv div:not(:first-child) app-carte{
-    margin-left: -50px;
+.mainDiv div.lock{
+    filter: invert(25%);
 }
 
-//[ngClass]="{'notplayable': !c.playable,'playable': c.playable,'playing':c.playable && playing }"
-
-app-carte:hover{
-    filter: invert(100%);
-    transform: translate(0px, -3vh);
-
+.mainDiv div:not(:first-child){
+    margin-left: -7vh;
 }
 
-.notplayable{
-    //filter: invert(25%);
+.uno:hover{
+    transform : translate(0, -3vh);
 }
 
-.playable{
-    //filter: invert(0%);
+.dos:hover,.dos:hover +div{
+    transform : translate(0, -3vh);
 }
 
-.playing{
-    //cursor: pointer;
+.tres:hover,.tres:hover +div,.tres:hover +div +div{
+    transform : translate(0, -3vh);
 }
 
-.playing:hover{
-    //filter: invert(100%);
-    //margin: 50px;
+.cuatro:hover,.cuatro:hover +div,.cuatro:hover +div +div,.cuatro:hover +div +div +div{
+    transform : translate(0, -3vh);
 }
