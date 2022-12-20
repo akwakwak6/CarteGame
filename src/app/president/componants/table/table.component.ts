@@ -12,7 +12,7 @@ export class TableComponent implements OnInit {
   id : number = 0//TODO use interceptor
 
   hand : number[] = [ 0,1,2,3,4,5,6,7,8,23,10,36,49,47]
-  centerCard : number[] = [20,33,46]
+  centerCard : number[] = [12]
 
   players : PresiPlayerModel[] = []
 

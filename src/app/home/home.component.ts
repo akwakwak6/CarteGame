@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PresiTableListModel } from '../Models/President/presi.tableList.model';
+import { DemoSSEService } from '../Services/demo-sse.service';
 import { PresidentService } from '../Services/president.service';
 
 @Component({
@@ -12,7 +13,8 @@ export class HomeComponent implements OnInit {
 
   presiTableLIst : PresiTableListModel[] = []
 
-  constructor(private presidentService : PresidentService ){ 
+  constructor(private presidentService : PresidentService,demoSse:DemoSSEService ){ 
+    demoSse.connect()
   }
 
   ngOnInit(): void {

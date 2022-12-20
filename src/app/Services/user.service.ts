@@ -5,13 +5,14 @@ import { UserModel } from '../Models/User/user.login.model';
 import { HttpClient } from '@angular/common/http';
 import { UserLoginModel } from '../Models/User/user.sendLogin.model';
 import { UserRegisterModel } from '../Models/User/user.register.model';
+import { SETTING } from '../share/consts/Setting';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private _url : string = "http://localhost:7140/api/User/";//TODO put in share mod
+  private _url : string = SETTING.URL_API + "User/";
 
   private _user : UserModel | null = null
   private _player : PlayerModel | null = null
