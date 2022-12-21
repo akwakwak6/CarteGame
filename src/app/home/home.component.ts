@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
 
   presiTableLIst : PresiTableListModel[] = []
 
-  constructor(private presidentService : PresidentService,demoSse:DemoSSEService ){ 
+  constructor(private presidentService : PresidentService,private demoSse:DemoSSEService ){ 
     demoSse.connect()
   }
 
@@ -35,6 +35,18 @@ export class HomeComponent implements OnInit {
 
   leaveTableIndex(index:number){
     this.presidentService.quitTableIndex(index)
+  }
+
+  sseTeam(){
+    this.demoSse.CreateTeam()
+  }
+
+  getTeams(){
+    this.demoSse.getAllTeams()
+  }
+
+  JoinTeam(){
+    this.demoSse.JoinTeam()
   }
 
 }
