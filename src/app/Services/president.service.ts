@@ -41,7 +41,7 @@ export class PresidentService {
     })
     
     //join table
-    this._tableLIst[index].players.push( this._userService.getPresiPlayer(id) )
+    //this._tableLIst[index].players.push( this._userService.getPresiPlayer(id) )
     this._tableLIst[index].joined = true
 
     //event

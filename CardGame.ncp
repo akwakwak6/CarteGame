@@ -1,0 +1,39 @@
+<Project>
+  <Name>CardGame</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Angulare</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>UserService</Name>
+        <Access>Public</Access>
+        <Location left="1082" top="110" />
+        <Size width="231" height="128" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void Login()</Member>
+        <Member type="Method">public void Register()</Member>
+        <Member type="Method">public Observable User()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>PresiService</Name>
+        <Access>Public</Access>
+        <Location left="1082" top="295" />
+        <Size width="231" height="149" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public Observable SubscribeHome()</Member>
+        <Member type="Method">public void CreateTable()</Member>
+        <Member type="Method">public void JoinTable()</Member>
+        <Member type="Method">public void SetCard()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships />
+  </ProjectItem>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>API</Name>
+    <Language>CSharp</Language>
+    <Entities />
+    <Relationships />
+  </ProjectItem>
+</Project>

@@ -41,6 +41,8 @@ export class RegisterComponent implements OnInit {
 
     this._usrService.register(u)
 
+    //TODO GO HOME
+
   }
 
   passwordValidator(group : AbstractControl): ValidationErrors | null {
