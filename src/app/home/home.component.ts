@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PresiTableListModel } from '../Models/President/presi.tableList.model';
 import { UserModel } from '../Models/User/user.login.model';
-import { DemoSSEService } from '../Services/demo-sse.service';
+import { UserLoginModel } from '../Models/User/user.sendLogin.model';
+import { MaimSseService } from '../Services/maim-sse.service';
 import { PresidentService } from '../Services/president.service';
 import { UserService } from '../Services/user.service';
 
@@ -18,19 +19,17 @@ export class HomeComponent implements OnInit {
 
   user : UserModel | null = null
 
-  private obs! : Subscription;
+  private obs! : Subscription
+  private sseUnsubMth! : () => void
 
-  constructor(private presidentService : PresidentService,private demoSse:DemoSSEService, private usrSer : UserService ){ 
-    demoSse.connect()
+  constructor(private presidentService : PresidentService,private usrSer : UserService,private sseSrv : MaimSseService ){ 
+
   }
 
   ngOnInit(): void {
-    this.presidentService.getTables().subscribe( t => this.presiTableLIst = t )
-    this.obs = this.usrSer.user.subscribe(u => {
-      console.log("user ")
-      console.log(u)
-      this.user = u
-    });
+    this.sseUnsubMth = this.sseSrv.subscribe<UserModel>( "UserLoginModel" , (e : UserModel) => console.log(e.pseudo) )
+    //this.presidentService.getTables().subscribe( t => this.presiTableLIst = t )
+    this.obs = this.usrSer.user.subscribe(u => {this.user = u});
   }
 
   addPresiTable(){
@@ -49,20 +48,9 @@ export class HomeComponent implements OnInit {
     this.presidentService.quitTableIndex(index)
   }
 
-  sseTeam(){
-    this.demoSse.CreateTeam()
-  }
-
-  getTeams(){
-    this.demoSse.getAllTeams()
-  }
-
-  JoinTeam(){
-    this.demoSse.JoinTeam()
-  }
-
   ngOnDestroy() {
-    this.obs.unsubscribe();
+    this.obs.unsubscribe()
+    this.sseUnsubMth()
   }
 
 }

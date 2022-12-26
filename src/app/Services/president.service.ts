@@ -1,7 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { PresiTableModel } from '../Models/President/presi.table.model';
 import { PresiTableListModel } from '../Models/President/presi.tableList.model';
+import { UserModel } from '../Models/User/user.login.model';
+import { SETTING } from '../share/consts/Setting';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -9,16 +12,22 @@ import { UserService } from './user.service';
 })
 export class PresidentService {
 
+  private _url : string = SETTING.URL_API + "Presi/";
+
   private _idTable : number = 0
   private _tableLIst : PresiTableListModel[] = []
   private _SubTableList$ : Subject<PresiTableListModel[]> = new Subject<PresiTableListModel[]>()
 
-  constructor(private _userService : UserService) { }
+  constructor(private _userService : UserService,private _httpClient : HttpClient) { }
 
   createTable(){
-    this._idTable ++
+
+    this._httpClient.post<UserModel>(this._url+"createTable",{}).subscribe( (r) => console.log(r) )
+    //TODO tp
+    /*this._idTable ++
     this._tableLIst.push( new PresiTableListModel(this._idTable) )
     this._SubTableList$.next(this._tableLIst)
+    *///
   }
 
   getTables():Observable<PresiTableListModel[]>{
