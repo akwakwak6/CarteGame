@@ -22,6 +22,7 @@ import { UserModule } from './user/user.module';
   providers: [
     //multi : true => Pour indiquer que votre interceptor injecté en transiant , multi : true
     { provide : HTTP_INTERCEPTORS, useClass : TokenInterceptor , multi : true }
+
   ],
   bootstrap: [AppComponent]
 })

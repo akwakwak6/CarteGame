@@ -14,65 +14,57 @@ export class PresidentService {
 
   private _url : string = SETTING.URL_API + "Presi/";
 
-  private _idTable : number = 0
-  private _tableLIst : PresiTableListModel[] = []
-  private _SubTableList$ : Subject<PresiTableListModel[]> = new Subject<PresiTableListModel[]>()
+  private _event! : EventSource
+
+  private MyId : number | null = null
 
   constructor(private _userService : UserService,private _httpClient : HttpClient) { }
 
   createTable(){
-
-    this._httpClient.post<UserModel>(this._url+"createTable",{}).subscribe( (r) => console.log(r) )
-    //TODO tp
-    /*this._idTable ++
-    this._tableLIst.push( new PresiTableListModel(this._idTable) )
-    this._SubTableList$.next(this._tableLIst)
-    *///
+    //create a new table of president, must be connected so send token
+    //TODO use Guard ?
+    this._httpClient.post<UserModel>(this._url+"createTable",{}).subscribe( (r) => console.log(" create table "+r) )
   }
 
-  getTables():Observable<PresiTableListModel[]>{
-    return this._SubTableList$.asObservable()
+  /*
+  subscribe<T>(object : string, mth : (object : T) => void): () => void{
+    this._event = new EventSource(SETTING.URL_API + "MainSse")
+    this._event.onerror= (er) => {
+      console.log(er)
+      this._event.close()
+    }
+    const m = (d:any) => {mth(JSON.parse(d.data))}  
+    this._event.addEventListener(object,m)
+    return () => {
+      this._event.removeEventListener(object,m)
+      this.close()
+    }
+  }
+  */
+
+
+  joinPresiTable(id:number, mth : (data : PresiTableModel) => void): () => void{
+
+
+    let token : string = localStorage.getItem('token') ?? "null";
+
+    this._event = new EventSource(this._url+"joinTable?tableId="+id+"&token="+token)
+    this._event.onerror= (er) => {
+      console.log(er)
+      this._event.close()
+    }
+
+    const m = (d:any) => {mth(JSON.parse(d.data))}  
+    this._event.addEventListener("PresiGameModel",m)
+
+    return () => {
+      this._event.removeEventListener("PresiGameModel",m)
+      this._event.close()
+    } 
   }
 
-  joinPresiTable(id:number){
-
-    //find table
-    let index = this._tableLIst.findIndex( t => t.id === id )
-    if( index === -1 ) return
-
-    //leave all table
-    this._tableLIst = this._tableLIst.map( t => {
-      if(t.joined){
-        this.quitTable(t.id)
-        t.joined = false
-      }
-      return t
-    })
-    
-    //join table
-    //this._tableLIst[index].players.push( this._userService.getPresiPlayer(id) )
-    this._tableLIst[index].joined = true
-
-    //event
-    this._SubTableList$.next(this._tableLIst)
-
-    
-  }
-
-
-  quitTableIndex(index:number):void{
-    let i = this._tableLIst[index].players.findIndex( p => p.id === 1 )//TODO use use id in userService
-    if(i === -1) return
-    this._tableLIst[index].joined = false
-    this._tableLIst[index].players.splice(i,1)
-    this._SubTableList$.next(this._tableLIst)
-  }
-
-  //better use index, not ID
   quitTable(id:number){
-    let ti = this._tableLIst.findIndex( t => t.id === id )
-    if( ti === -1 ) return
-    this.quitTableIndex(ti)
+    console.log("quit table "+id)
   }
 
   sendReady(){

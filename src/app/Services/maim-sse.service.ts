@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { SETTING } from '../share/consts/Setting';
 
 @Injectable({
@@ -7,24 +6,37 @@ import { SETTING } from '../share/consts/Setting';
 })
 export class MaimSseService {
 
-  private _event : EventSource
+  private _event! : EventSource
 
+  //TODO get list when connect OK, when disconnect close event,then reopen on sub. => so put all in subscribe mth
   constructor() {
+    
+  }
+
+  /*
+  methode generique to subscribe to event from API
+
+  para1 : event name ( object name send from API ) 
+  para2 : call back mth, called when get msg from API with para of type T.  
+
+  return : mth to remove subscribe
+  */
+  subscribe<T>(object : string, mth : (object : T) => void): () => void{
     this._event = new EventSource(SETTING.URL_API + "MainSse")
     this._event.onerror= (er) => {
       console.log(er)
       this._event.close()
     }
+    const m = (d:any) => {mth(JSON.parse(d.data))}  
+    this._event.addEventListener(object,m)
+    return () => {
+      this._event.removeEventListener(object,m)
+      this.close()
+    }
   }
 
-  subscribe<T>(object : string, mth : (object : T) => void): () => void{
-    const t = (d:any) => {
-      mth(JSON.parse(d.data))
-    }  
-
-    this._event.addEventListener(object,t)
-
-    return () => this._event.removeEventListener(object,t)
+  close(){
+    this._event.close()
   }
 
 }

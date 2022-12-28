@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PresiTableListModel } from '../Models/President/presi.tableList.model';
+import { presiTablesListModel } from '../Models/President/presi.tablesList.model';
 import { UserModel } from '../Models/User/user.login.model';
 import { UserLoginModel } from '../Models/User/user.sendLogin.model';
 import { MaimSseService } from '../Services/maim-sse.service';
@@ -22,12 +24,16 @@ export class HomeComponent implements OnInit {
   private obs! : Subscription
   private sseUnsubMth! : () => void
 
-  constructor(private presidentService : PresidentService,private usrSer : UserService,private sseSrv : MaimSseService ){ 
+  constructor(private presidentService : PresidentService,private usrSer : UserService,private sseSrv : MaimSseService, private router : Router ){ 
 
   }
 
   ngOnInit(): void {
-    this.sseUnsubMth = this.sseSrv.subscribe<UserModel>( "UserLoginModel" , (e : UserModel) => console.log(e.pseudo) )
+    console.log(" init home ")
+    this.sseUnsubMth = this.sseSrv.subscribe<presiTablesListModel>( "PresiTableList" , (e : presiTablesListModel) => {
+      this.presiTableLIst = e.tables 
+      console.log(this.presiTableLIst)
+    })
     //this.presidentService.getTables().subscribe( t => this.presiTableLIst = t )
     this.obs = this.usrSer.user.subscribe(u => {this.user = u});
   }
@@ -37,15 +43,11 @@ export class HomeComponent implements OnInit {
   }
 
   joinPresiTable(id:number){
-    this.presidentService.joinPresiTable(id)
+    this.router.navigate( [ "presi/table/"+id ] )
   }
 
   leaveTable(id:number){
     this.presidentService.quitTable(id)
-  }
-
-  leaveTableIndex(index:number){
-    this.presidentService.quitTableIndex(index)
   }
 
   ngOnDestroy() {
