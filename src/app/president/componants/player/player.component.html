@@ -1,4 +1,4 @@
-<div class="mainDiv">
+<div [ngClass]="{'mainDiv':true,'isPlaying': player.isPlaying}">
     <div>{{roleStr}} {{player.pseudo}}</div>
     <div>{{player.nbCard}}</div>
 </div>

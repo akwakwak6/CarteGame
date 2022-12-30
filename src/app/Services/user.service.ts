@@ -7,6 +7,7 @@ import { UserLoginModel } from '../Models/User/user.sendLogin.model';
 import { UserRegisterModel } from '../Models/User/user.register.model';
 import { SETTING } from '../share/consts/Setting';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -19,14 +20,20 @@ export class UserService {
 
   user = this._user.asObservable()
 
-  constructor(private _httpClient : HttpClient) { }
+  constructor(private _httpClient : HttpClient,private _router: Router) { }
 
   login(u:UserLoginModel){
-    this._httpClient.post<UserModel>(this._url+"login",u).subscribe( (r: UserModel) => this.logIn(r) )
+    this._httpClient.post<UserModel>(this._url+"login",u).subscribe( (r: UserModel) => {
+      this.logIn(r)
+      this._router.navigate( [ "/home" ] )
+    })
   }
 
   register(u:UserRegisterModel){
-    this._httpClient.post<UserModel>(this._url+"register",u).subscribe( (r: UserModel) => this.logIn(r) )
+    this._httpClient.post<UserModel>(this._url+"register",u).subscribe( (r: UserModel) => {
+      this.logIn(r)
+      this._router.navigate( [ "/home" ] ) 
+    })
   }
 
   private logIn(u : UserModel){

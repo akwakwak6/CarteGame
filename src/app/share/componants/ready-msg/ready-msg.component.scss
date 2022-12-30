@@ -1,0 +1,11 @@
+.mainDiv{
+    z-index: 100;
+    width: 20vh;
+    height: 12vh;
+    background-color: blue;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    border: solid 5px black;
+}

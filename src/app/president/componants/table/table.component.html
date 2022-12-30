@@ -1,12 +1,11 @@
-<p>president table works!</p>
-<p>{{id}}</p>
-
 <app-cards-center [cards]="centerCard"></app-cards-center>
 
-<app-hand [cards]="hand" [playing]="playing" [centerCard]="centerCard"></app-hand>
-
+<app-hand [cards]="hand" [playing]="true" [centerCard]="centerCard"></app-hand>
 <div *ngFor="let p of players">
     <app-player [player]="p"></app-player>
 </div>
 
 <input type="button" value="Quit" (click)="quit()">
+
+<app-player *ngIf="me" [player]="me"></app-player>
+<app-ready-msg *ngIf="showReady" [fct]="clickOK()"></app-ready-msg>

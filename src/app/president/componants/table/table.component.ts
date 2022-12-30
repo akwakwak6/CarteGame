@@ -1,3 +1,4 @@
+import { NgStyle } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PresiPlayerModel, PresiRoles } from 'src/app/Models/President/presi.player.model';
@@ -11,30 +12,21 @@ import { PresidentService } from 'src/app/Services/president.service';
 })
 export class TableComponent implements OnInit {
 
-  id : number = 0
+  tableID : number = 0
 
   hand : number[] = [ 0,1,2,3,4,5,6,7,8,23,10,36,49,47]
   centerCard : number[] = [12]
-
   players : PresiPlayerModel[] = []
-
-  playing : boolean = true
+  showReady : boolean = false
+  me : PresiPlayerModel|null = null
 
   constructor(private route: ActivatedRoute,private _router: Router,private presidentService : PresidentService) {
-
-    this.players = [
-      new PresiPlayerModel(1,"p1"),
-      new PresiPlayerModel(1,"p2",5),
-      new PresiPlayerModel(1,"p3",3,PresiRoles.Bum),
-      new PresiPlayerModel(1,"p4",1,PresiRoles.President)
-    ]
-
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.id = Number( params.get('id') )
-      this.presidentService.joinPresiTable(this.id,this.update)
+      this.tableID = Number( params.get('id') )
+      this.presidentService.joinPresiTable(this.tableID,this.update.bind(this))
       console.log("joinPresiTable");
     });
   }
@@ -45,6 +37,23 @@ export class TableComponent implements OnInit {
 
   private update(data:PresiTableModel){
     console.log( data )
+    
+    this.players = data.players
+
+    console.log(this.players)
+
+    this.hand = data.myHand
+    this.centerCard = data.centerCarte
+    this.showReady = data.showReady
+    this.me = data.me
   }
 
+  clickOK(){
+      const m = () => {
+        this.presidentService.sendReady()
+        //this.presidentService.sendCards([0,1,2,3])
+      }
+      m.bind(this)
+      return m
+  }
 }

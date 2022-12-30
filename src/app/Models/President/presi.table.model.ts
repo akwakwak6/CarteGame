@@ -1,11 +1,14 @@
 import { TableModel } from "../table.model";
 import { PresiPlayerModel } from "./presi.player.model";
 
-export class PresiTableModel {
+export interface PresiTableModel {
     
-    players: PresiPlayerModel[] = []
-    centerCarte : number = 0
-    playing : number = 0
-    myHand : number[] = []
+    myPlayerId : number
+    players: PresiPlayerModel[]
+    centerCarte : number[]
+    playing : number[] 
+    myHand : number[]
+    showReady : boolean
+    me : PresiPlayerModel
 
 }

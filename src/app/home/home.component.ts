@@ -46,8 +46,8 @@ export class HomeComponent implements OnInit {
     this.router.navigate( [ "presi/table/"+id ] )
   }
 
-  leaveTable(id:number){
-    this.presidentService.quitTable(id)
+  leaveTable(){
+    this.presidentService.quitTable()
   }
 
   ngOnDestroy() {

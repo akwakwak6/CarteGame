@@ -10,16 +10,16 @@ import { PlayerComponent } from './componants/player/player.component';
 
 
 @NgModule({
-  declarations: [
-    TableComponent,
-    HandComponent,
-    CardsCenterComponent,
-    PlayerComponent
-  ],
-  imports: [
-    CommonModule,
-    PresidentRoutingModule,
-    ShareModule
-  ]
+    declarations: [
+        TableComponent,
+        HandComponent,
+        CardsCenterComponent,
+        PlayerComponent
+    ],
+    imports: [
+        CommonModule,
+        PresidentRoutingModule,
+        ShareModule,
+    ]
 })
 export class PresidentModule { }
