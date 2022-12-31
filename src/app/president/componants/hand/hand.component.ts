@@ -13,12 +13,14 @@ export class HandComponent implements OnInit {
 
 
   @Input() cardes : PresiCardModel[] = []
+
+  constructor(private presidentService : PresidentService) { }
   /*@Input() cards : number[] = []
   @Input() playing : boolean = true
   @Input() centerCard : number[] = []
 
-  constructor(private presidentService : PresidentService) { }
-
+  
+constructor(private presidentService : PresidentService) { }
   
 
   getClass(i:number):string{
@@ -52,6 +54,7 @@ export class HandComponent implements OnInit {
   }
 
   upCard(index:number){
+    if( this.cardes[index].shaded ) return
     this.cardes[index].up = true
     for(let i = 0;i<this.cardes[index].selectPrec;i++){
       this.cardes[index - i - 1].up = true
@@ -62,15 +65,11 @@ export class HandComponent implements OnInit {
 
     const cs : number[] = []
 
-    console.log(` ${this.cardes[index].val} => ${this.cardes[index].selectPrec} `)
-
-    
-
     for( let i = index; i >=index-this.cardes[index].selectPrec ; i--  ){
       cs.push( this.cardes[i].val )
     }
 
-    console.log(` so => ${cs} `)
+    this.presidentService.sendCards(cs)
 
 
   }

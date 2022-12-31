@@ -64,21 +64,30 @@ export class TableComponent implements OnInit {
   }
 
   private makeMyHand(){
-    this.myHand = []
+    this.handTp = []
 
-    this.myHand.push( { val:1,shaded:true,up:false,selectPrec:0 } )
-    this.myHand.push( { val:2,shaded:true,up:false,selectPrec:0 } )
-    this.myHand.push( { val:3,shaded:true,up:false,selectPrec:0 } )
-    this.myHand.push( { val:16,shaded:false,up:false,selectPrec:1 } )
-    this.myHand.push( { val:5,shaded:false,up:false,selectPrec:0 } )
-    this.myHand.push( { val:6,shaded:false,up:false,selectPrec:0 } )
-    this.myHand.push( { val:7,shaded:false,up:false,selectPrec:0 } )
+    this.handTp.push(1)
+    this.handTp.push(2)
+    this.handTp.push(3)
+    this.handTp.push(16)
+    this.handTp.push(4)
+    this.handTp.push(5)
 
-    /*const valMin = this.centerCard.length > 0 ? getValue(this.centerCard[0]) : 0
-    const nbMin = this.centerCard.length
+    this.centerCard = [2]
+    //TODO manage 2s and jokers
 
+    const valMin = this.centerCard.length > 0 ? getValue(this.centerCard[0]) : 0
+    let lastV = -1
+    let sameVal = 0
+    
     this.handTp.forEach( c => {
-
-    })*/
+      if( lastV === getValue(c) )
+        sameVal++
+      else 
+        sameVal = 0
+      const shaded : boolean = ( valMin > getValue(c) ) ||  sameVal + 1 < this.centerCard.length 
+      this.myHand.push( { val:c,shaded:shaded,up:false,selectPrec:sameVal } )
+      lastV = getValue(c)
+    })
   }
 }
