@@ -5,3 +5,8 @@ export function isSameValue(card : number,card2 : number) : boolean {
 export function diffValue(c1:number,c2:number):number{
     return c1 % 13 - c2 % 13
 }
+
+export function getValue(c:number):number{
+    return c % 13
+}
+

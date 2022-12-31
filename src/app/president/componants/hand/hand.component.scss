@@ -11,13 +11,25 @@
     filter: invert(0);
 }
 
+.mainDiv div:not(:first-child){
+    margin-left: -7vh;
+}
+
+.lock{
+    filter: invert(25%);
+}
+
+.up{
+    transform : translate(0, -3vh);
+}
+
+
+/*
 .mainDiv div.lock{
     filter: invert(25%);
 }
 
-.mainDiv div:not(:first-child){
-    margin-left: -7vh;
-}
+
 
 .uno:hover{
     transform : translate(0, -3vh);
@@ -34,3 +46,10 @@
 .cuatro:hover,.cuatro:hover +div,.cuatro:hover +div +div,.cuatro:hover +div +div +div{
     transform : translate(0, -3vh);
 }
+
+
+*/
+
+
+
+///////////////////////////////////////////////

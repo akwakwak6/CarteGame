@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { PresiCardModel } from '../Models/President/presi.card.model';
 import { PresiTableModel } from '../Models/President/presi.table.model';
 import { PresiTableListModel } from '../Models/President/presi.tableList.model';
 import { UserModel } from '../Models/User/user.login.model';
@@ -13,9 +14,7 @@ import { UserService } from './user.service';
 export class PresidentService {
 
   private _url : string = SETTING.URL_API + "Presi/";
-
   private _event! : EventSource
-
   private playerId : number | null = null
   private idTable : number | null = null
 
@@ -45,7 +44,7 @@ export class PresidentService {
 
 
   joinPresiTable(id:number, mth : (data : PresiTableModel) => void): () => void{
-
+    //TODO use obs, if not connected connect, if no lisener any more close
     this.idTable = id
     let token : string = localStorage.getItem('token') ?? "null";
 

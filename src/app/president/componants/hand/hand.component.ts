@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PresiCardModel } from 'src/app/Models/President/presi.card.model';
+import { PresidentService } from 'src/app/Services/president.service';
 import { diffValue, isSameValue } from 'src/app/share/helper/cardsHelper';
 import { canPlay } from '../../utils/presiCardsUtil';
 
@@ -9,14 +11,15 @@ import { canPlay } from '../../utils/presiCardsUtil';
 })
 export class HandComponent implements OnInit {
 
-  @Input() cards : number[] = []
+
+  @Input() cardes : PresiCardModel[] = []
+  /*@Input() cards : number[] = []
   @Input() playing : boolean = true
   @Input() centerCard : number[] = []
 
-  constructor() { }
+  constructor(private presidentService : PresidentService) { }
 
-  ngOnInit(): void {
-  }
+  
 
   getClass(i:number):string{
 
@@ -36,7 +39,40 @@ export class HandComponent implements OnInit {
     if(this.getClass(index) === "" || this.getClass(index) === "lock" )
       return
 
+    this.presidentService.sendCards([this.cards[index]]);
     console.log("can send ")
+  }*/
+
+  ngOnInit(): void {
+    this.cardes.forEach( c => console.log(` ${c.val} ${c.shaded} ${c.up} ${c.selectPrec} `) )
+  }
+
+  downCard(){
+    this.cardes = this.cardes.map( c => {c.up = false;return c} )
+  }
+
+  upCard(index:number){
+    this.cardes[index].up = true
+    for(let i = 0;i<this.cardes[index].selectPrec;i++){
+      this.cardes[index - i - 1].up = true
+    }
+  }
+
+  selectCard(index:number){
+
+    const cs : number[] = []
+
+    console.log(` ${this.cardes[index].val} => ${this.cardes[index].selectPrec} `)
+
+    
+
+    for( let i = index; i >=index-this.cardes[index].selectPrec ; i--  ){
+      cs.push( this.cardes[i].val )
+    }
+
+    console.log(` so => ${cs} `)
+
+
   }
 
 }
