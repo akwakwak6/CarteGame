@@ -46,7 +46,7 @@ export class TableComponent implements OnInit {
 
     console.log(this.players)
 
-    this.handTp = data.myHand
+    this.handTp = data.myHand//TODO var useless remove it send in para
     this.centerCard = data.centerCarte
     this.showReady = data.showReady
     this.me = data.me
@@ -66,14 +66,20 @@ export class TableComponent implements OnInit {
   private makeMyHand(){
     this.handTp = []
 
+    this.handTp.push(53)
+    this.handTp.push(0)
     this.handTp.push(1)
     this.handTp.push(2)
+    this.handTp.push(5)
     this.handTp.push(3)
     this.handTp.push(16)
+    this.handTp.push(13)
     this.handTp.push(4)
     this.handTp.push(5)
 
-    this.centerCard = [2]
+    this.handTp.sort( (a,b) => getValue(a) - getValue(b)  )
+
+    this.centerCard = [2,15]
     //TODO manage 2s and jokers
 
     const valMin = this.centerCard.length > 0 ? getValue(this.centerCard[0]) : 0
@@ -81,11 +87,17 @@ export class TableComponent implements OnInit {
     let sameVal = 0
     
     this.handTp.forEach( c => {
+
       if( lastV === getValue(c) )
         sameVal++
       else 
         sameVal = 0
-      const shaded : boolean = ( valMin > getValue(c) ) ||  sameVal + 1 < this.centerCard.length 
+      let shaded : boolean = valMin >= getValue(c)  ||  sameVal + 1 < this.centerCard.length 
+      
+      if( getValue(c) == 0 ){//if is a 2 can play
+        shaded = sameVal + 2 < this.centerCard.length
+      }
+       
       this.myHand.push( { val:c,shaded:shaded,up:false,selectPrec:sameVal } )
       lastV = getValue(c)
     })
