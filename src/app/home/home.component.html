@@ -1,11 +1,23 @@
-<h1>Home</h1>
+<div class="mainDiv">
 
-<input type="button" routerLink="user/login" value="Login">
+    <div class="nav">
+        <img src="/assets/images/cards/RJ.png">
+        <h1>Home</h1>
+        <input *ngIf="!user" type="button" routerLink="user/login" value="Login">
+        <input *ngIf="user" type="button" value="log out">
+    </div>
+
+    <div *ngIf="user">
+        <input *ngIf="user" type="button" (click)="addPresiTable()" value="new table">
+    </div>
+    
 
 
-<p>President tables</p>
-<input *ngIf="user" type="button" (click)="addPresiTable()" value="new table">
-<div *ngFor="let table of presiTableLIst;index as i">
-    <input type="button" (click)="joinPresiTable(table.id)" value="players : {{table.players.length}}">
-    <input *ngIf="table.joined" type="button" [routerLink]="['presi/table', table.id]" value="GO">
+    <h2>President tables</h2>
+    
+    <div *ngFor="let table of presiTableLIst;index as i">
+        <input type="button" (click)="joinPresiTable(table.id)" value="players : {{table.players.length}}">
+        <input *ngIf="table.joined" type="button" [routerLink]="['presi/table', table.id]" value="GO">
+    </div>
+
 </div>

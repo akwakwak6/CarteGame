@@ -1,11 +1,28 @@
-<app-cards-center [cards]="centerCard"></app-cards-center>
+<div class="mainDiv">
 
-<app-hand></app-hand>
-<div *ngFor="let p of players">
-    <app-player [player]="p"></app-player>
+    <div class="nav">
+        <h1> President table {{tableID}} </h1>
+        <input class="quitBtn" type="button" value="Quit" (click)="quit()">
+    </div>
+    
+
+
+    <div class="players" >
+        <app-player class="player" *ngFor="let p of players" [player]="p"></app-player>
+    </div>
+
+
+    <app-cards-center class="centerCards" [cards]="centerCard"></app-cards-center>
+
+    <app-player *ngIf="me" [player]="me"></app-player>
+
+    <input class="pssBtn" type="button" value="Pass">
+
+    <app-hand></app-hand>
+    
+    
+    
+    <app-ready-msg *ngIf="showReady" [fct]="clickOK()"></app-ready-msg>
 </div>
 
-<input type="button" value="Quit" (click)="quit()">
 
-<app-player *ngIf="me" [player]="me"></app-player>
-<app-ready-msg *ngIf="showReady" [fct]="clickOK()"></app-ready-msg>

@@ -42,7 +42,7 @@ export class TableComponent implements OnInit {
     console.log( data )
     
     this.players = data.players
-    this.handTp = data.myHand//TODO var useless remove it send in para
+    //this.handTp = data.myHand//TODO var useless remove it send in para
     this.centerCard = data.centerCarte
     this.showReady = data.showReady
     this.me = data.me
