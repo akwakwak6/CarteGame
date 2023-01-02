@@ -31,8 +31,6 @@ export class LoginComponent implements OnInit {
     }
     const ul : UserLoginModel = {pwd:this.loginForm.value.password, pseudo:this.loginForm.value.pseudo}
     this._userService.login(ul)
-
-    //TODO GO HOME
     
   }
 

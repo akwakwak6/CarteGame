@@ -22,19 +22,17 @@ export class HomeComponent implements OnInit {
   user : UserModel | null = null
 
   private obs! : Subscription
-  private sseUnsubMth! : () => void
+  private sseUnsubMth! : () => void //TODO replace by observable
 
   constructor(private presidentService : PresidentService,private usrSer : UserService,private sseSrv : MaimSseService, private router : Router ){ 
 
   }
 
   ngOnInit(): void {
-    console.log(" init home ")
     this.sseUnsubMth = this.sseSrv.subscribe<presiTablesListModel>( "PresiTableList" , (e : presiTablesListModel) => {
       this.presiTableLIst = e.tables 
       console.log(this.presiTableLIst)
     })
-    //this.presidentService.getTables().subscribe( t => this.presiTableLIst = t )
     this.obs = this.usrSer.user.subscribe(u => {this.user = u});
   }
 
@@ -46,13 +44,13 @@ export class HomeComponent implements OnInit {
     this.router.navigate( [ "presi/table/"+id ] )
   }
 
-  leaveTable(){
-    this.presidentService.quitTable()
-  }
-
   ngOnDestroy() {
     this.obs.unsubscribe()
     this.sseUnsubMth()
+  }
+
+  logOut(){
+    this.usrSer.logOut()
   }
 
 }

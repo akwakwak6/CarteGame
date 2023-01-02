@@ -24,15 +24,11 @@ export class RegisterComponent implements OnInit {
   }
 
   submit(){
-
-    console.log(this.form.value)
     
     if(!this.form.valid){
       this.form.markAllAsTouched()
       return
     }
-    
-    console.log("form OK send to API")
 
     const u : UserRegisterModel = {
       pseudo : this.form.value.pseudo,
@@ -40,8 +36,6 @@ export class RegisterComponent implements OnInit {
     }
 
     this._usrService.register(u)
-
-    //TODO GO HOME
 
   }
 

@@ -37,23 +37,14 @@ export class UserService {
   }
 
   private logIn(u : UserModel){
-
     console.log(u);
     this._user.next(u)
     localStorage.setItem('token', u.token);
-
   }
 
-  private logOut(){
+  logOut(){
     localStorage.removeItem('token');
     this._user.next(null)
   }
-
-  /*
-  getPresiPlayer(tableId : number):PlayerModel{
-    this._player = this._user === null ? this._player = new PresiPlayerModel(1,"Visitor_1") : new PresiPlayerModel(this._user.id,this._user.pseudo)
-    //TODO use subject => next here
-    return this._player
-  }*/
 
 }

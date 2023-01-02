@@ -4,15 +4,13 @@
         <img src="/assets/images/cards/RJ.png">
         <h1>Home</h1>
         <input *ngIf="!user" type="button" routerLink="user/login" value="Login">
-        <input *ngIf="user" type="button" value="log out">
+        <input *ngIf="user" type="button" value="log out" (click)="logOut()">
     </div>
 
     <div *ngIf="user">
         <input *ngIf="user" type="button" (click)="addPresiTable()" value="new table">
     </div>
     
-
-
     <h2>President tables</h2>
     
     <div *ngFor="let table of presiTableLIst;index as i">
