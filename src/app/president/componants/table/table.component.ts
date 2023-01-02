@@ -5,7 +5,7 @@ import { PresiCardModel } from 'src/app/Models/President/presi.card.model';
 import { PresiPlayerModel, PresiRoles } from 'src/app/Models/President/presi.player.model';
 import { PresiTableModel } from 'src/app/Models/President/presi.table.model';
 import { PresidentService } from 'src/app/Services/president.service';
-import { getValue } from 'src/app/share/helper/cardsHelper';
+import { getValue, isJoker } from 'src/app/share/helper/cardsHelper';
 
 @Component({
   selector: 'app-table',
@@ -27,10 +27,9 @@ export class TableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.makeMyHand()
-    this.route.paramMap.subscribe((params) => {
+    this.route.paramMap.subscribe((params:any) => {
       this.tableID = Number( params.get('id') )
-      this.presidentService.joinPresiTable(this.tableID,this.update.bind(this))
+      this.presidentService.joinPresiTable(this.tableID).subscribe( t => this.update(t) )
       console.log("joinPresiTable");
     });
   }
@@ -64,27 +63,15 @@ export class TableComponent implements OnInit {
   }
 
   private makeMyHand(){
-    this.handTp = []
 
-    this.handTp.push(53)
-    this.handTp.push(0)
-    this.handTp.push(1)
-    this.handTp.push(2)
-    this.handTp.push(5)
-    this.handTp.push(3)
-    this.handTp.push(16)
-    this.handTp.push(13)
-    this.handTp.push(4)
-    this.handTp.push(5)
-
-    this.handTp.sort( (a,b) => getValue(a) - getValue(b)  )
-
-    this.centerCard = [2,15]
-    //TODO manage 2s and jokers
-
+    this.myHand = []
     const valMin = this.centerCard.length > 0 ? getValue(this.centerCard[0]) : 0
+    const nbCenter =  this.centerCard.length
+
     let lastV = -1
     let sameVal = 0
+ 
+    let cptCanPlay = 0
     
     this.handTp.forEach( c => {
 
@@ -92,14 +79,24 @@ export class TableComponent implements OnInit {
         sameVal++
       else 
         sameVal = 0
-      let shaded : boolean = valMin >= getValue(c)  ||  sameVal + 1 < this.centerCard.length 
-      
-      if( getValue(c) == 0 ){//if is a 2 can play
-        shaded = sameVal + 2 < this.centerCard.length
+
+
+        /*
+          can play card if val is greater and nbCard grerater or equal ( nb card means cards with same value ) OR val equal and nbcard greater
+        */
+
+      let shaded : boolean = ! ( (getValue(c) > valMin && sameVal + 1 >= nbCenter ) || ( getValue(c) >= valMin && sameVal + 1 > nbCenter ) )
+
+      if( getValue(c) == 0 ){//TODO use enum : if is a 2 can play
+        shaded = sameVal + 2 < nbCenter
       }
+
+      if( !shaded ) 
+        cptCanPlay++
        
       this.myHand.push( { val:c,shaded:shaded,up:false,selectPrec:sameVal } )
       lastV = getValue(c)
     })
+    return cptCanPlay
   }
 }

@@ -12,7 +12,7 @@ import { canPlay } from '../../utils/presiCardsUtil';
 export class HandComponent implements OnInit {
 
 
-  @Input() cardes : PresiCardModel[] = []
+  cardes : PresiCardModel[] = []
 
   constructor(private presidentService : PresidentService) { }
   /*@Input() cards : number[] = []
@@ -46,7 +46,8 @@ constructor(private presidentService : PresidentService) { }
   }*/
 
   ngOnInit(): void {
-    this.cardes.forEach( c => console.log(` ${c.val} ${c.shaded} ${c.up} ${c.selectPrec} `) )
+    //this.cardes.forEach( c => console.log(` ${c.val} ${c.shaded} ${c.up} ${c.selectPrec} `) )
+    this.presidentService.cardsObs$.subscribe( cs => this.cardes = cs )
   }
 
   downCard(){

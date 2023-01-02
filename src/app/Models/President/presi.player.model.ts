@@ -9,6 +9,7 @@ export enum PresiRoles {
 
 export interface PresiPlayerModel  {
 
+    id:number
     pseudo: string
     nbCard : number
     role : PresiRoles
