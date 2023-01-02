@@ -1,11 +1,11 @@
-import { NgStyle } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PresiCardModel } from 'src/app/Models/President/presi.card.model';
-import { PresiPlayerModel, PresiRoles } from 'src/app/Models/President/presi.player.model';
+import { PresiPlayerModel } from 'src/app/Models/President/presi.player.model';
 import { PresiTableModel } from 'src/app/Models/President/presi.table.model';
 import { PresidentService } from 'src/app/Services/president.service';
-import { getValue, isJoker } from 'src/app/share/helper/cardsHelper';
+import { getValue } from 'src/app/share/helper/cardsHelper';
 
 @Component({
   selector: 'app-table',
@@ -42,9 +42,6 @@ export class TableComponent implements OnInit {
     console.log( data )
     
     this.players = data.players
-
-    console.log(this.players)
-
     this.handTp = data.myHand//TODO var useless remove it send in para
     this.centerCard = data.centerCarte
     this.showReady = data.showReady

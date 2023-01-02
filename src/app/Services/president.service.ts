@@ -104,8 +104,8 @@ export class PresidentService {
   private makeMyHand():PresiCardModel[]{
 
     const myHand : PresiCardModel[] = []
-    const valMin = this._tableData.centerCarte.length > 0 ? getValue(this._tableData.centerCarte[0]) : 0
-    const nbCenter =  this._tableData.centerCarte.length
+    const valMin = this._tableData.centerCarte.length > 0 ? getValue(this._tableData.centerCarte[0]) != 0 ? getValue(this._tableData.centerCarte[0]) : 0 : 0
+    const nbCenter = this._tableData.centerCarte.length > 0 ?  getValue(this._tableData.centerCarte[0]) != 0 ? this._tableData.centerCarte.length : 0 : 0
 
     let lastV = -1
     let sameVal = 0
