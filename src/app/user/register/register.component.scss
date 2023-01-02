@@ -1,0 +1,17 @@
+.mainDiv{
+    margin-top: 5%;
+    text-align: center;
+}
+
+form{
+    width: 50vw;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items : center;
+}
+
+form div,form button,form input{
+    margin: 1%;
+}

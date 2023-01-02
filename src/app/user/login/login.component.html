@@ -1,21 +1,24 @@
-<a routerLink="../..">HOME</a>
+<div class="mainDiv">
 
-<h2>Connexion</h2>
+    <a routerLink="../..">HOME</a>
 
-<form [formGroup]="loginForm" (ngSubmit)="login()">
-    <div>
-        <label for="pseuso" >Pseudo</label>
-        <input id="pseuso" type="text" formControlName="pseudo">
-        <span class="errorMsg" *ngIf="loginForm.get('pseudo')?.touched && loginForm.get('pseudo')?.errors?.['required']">Le champs est requis</span>
-    </div>
-    <div>
-        <label for="password">password</label>
-        <input id="password" type="password" formControlName="password">
-        <span class="errorMsg" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']">Le champs est requis</span>
-    </div>
-    <button type="submit" >Login in</button>
-</form>
+    <h2>Connexion</h2>
 
-<!-- //TODO forget password -->
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <div>
+            <label for="pseuso" >Pseudo</label>
+            <input id="pseuso" type="text" formControlName="pseudo">
+            <span class="errorMsg" *ngIf="loginForm.get('pseudo')?.touched && loginForm.get('pseudo')?.errors?.['required']">Le champs est requis</span>
+        </div>
+        <div>
+            <label for="password">password</label>
+            <input id="password" type="password" formControlName="password">
+            <span class="errorMsg" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']">Le champs est requis</span>
+        </div>
+        <button type="submit" >Login in</button>
+    </form>
 
-<a routerLink="../register">no login ? login up</a>
+    <!-- //TODO forget password -->
+
+    <a routerLink="../register">no login ? login up</a>
+</div>
