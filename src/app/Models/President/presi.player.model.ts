@@ -14,4 +14,5 @@ export interface PresiPlayerModel  {
     nbCard : number
     role : PresiRoles
     isPlaying : boolean
+    passed : boolean
 }

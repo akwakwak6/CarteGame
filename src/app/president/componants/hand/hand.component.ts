@@ -24,6 +24,7 @@ export class HandComponent implements OnInit {
 
   upCard(index:number){
     if( this.cardes[index].shaded ) return
+    if( !this.cardes[index].canPlay ) return
     this.cardes[index].up = true
     for(let i = 0;i<this.cardes[index].selectPrec;i++){
       this.cardes[index - i - 1].up = true

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { PresiCardModel } from '../Models/President/presi.card.model';
 import { PresiTableModel } from '../Models/President/presi.table.model';
@@ -26,7 +27,7 @@ export class PresidentService {
   private playerId : number | null = null
   private idTable : number | null = null
 
-  constructor(private _userService : UserService,private _httpClient : HttpClient) { }
+  constructor(private _userService : UserService,private _httpClient : HttpClient,private _router: Router) { }
 
   createTable(){
     //create a new table of president, must be connected so send token
@@ -60,6 +61,7 @@ export class PresidentService {
     this._event.onerror= (er) => {
       console.log(er)
       this._event.close()
+      this._router.navigate( [ "/home" ] )
     }
 
     //this._event.addEventListener ( "playerID" , this.setPlayerId.bind(this))//TODO use lambda ?
@@ -97,8 +99,8 @@ export class PresidentService {
 
   //TODO use token
   sendCards(cards : number[]){
-    //TODO check my time to play
-    this._httpClient.post( `${this._url}setCards?tableId=${this.idTable}&playerId=${this.playerId}`,cards).subscribe( )
+    if( this._tableData.me.isPlaying )
+      this._httpClient.post( `${this._url}setCards?tableId=${this.idTable}&playerId=${this.playerId}`,cards).subscribe( )
   }
 
   private makeMyHand():PresiCardModel[]{
@@ -112,6 +114,11 @@ export class PresidentService {
     
     this._tableData.myHand.forEach( c => {
 
+      if( !this._tableData.me.isPlaying ){
+        myHand.push( { val:c,shaded:false,canPlay:false,up:false,selectPrec:0 } )
+        return
+      }
+
       if( lastV === getValue(c) )
         sameVal++
       else 
@@ -124,11 +131,11 @@ export class PresidentService {
 
       let shaded : boolean = ! ( (getValue(c) > valMin && sameVal + 1 >= nbCenter ) || ( getValue(c) >= valMin && sameVal + 1 > nbCenter ) )
 
-      if( getValue(c) == 0 ){//TODO use enum : if is a 2 can play
-        shaded = sameVal + 2 < nbCenter
+      if( getValue(c) == 0 ){//TODO use enum //if is a 2 can play
+        shaded = sameVal + 2 < nbCenter//TODO affect directely shaded
       }
        
-      myHand.push( { val:c,shaded:shaded,up:false,selectPrec:sameVal } )
+      myHand.push( { val:c,shaded:shaded,canPlay:!shaded,up:false,selectPrec:sameVal } )
       lastV = getValue(c)
     })
 

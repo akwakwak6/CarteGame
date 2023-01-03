@@ -16,7 +16,7 @@
 
     <app-player *ngIf="me" [player]="me"></app-player>
 
-    <input class="pssBtn" type="button" value="Pass">
+    <input class="pssBtn" type="button" value="Pass" (click)="pass()">
 
     <app-hand></app-hand>
     

@@ -46,8 +46,6 @@ export class TableComponent implements OnInit {
     this.centerCard = data.centerCarte
     this.showReady = data.showReady
     this.me = data.me
-
-    this.makeMyHand()
   }
 
   clickOK(){
@@ -59,41 +57,9 @@ export class TableComponent implements OnInit {
       return m
   }
 
-  private makeMyHand(){
-
-    this.myHand = []
-    const valMin = this.centerCard.length > 0 ? getValue(this.centerCard[0]) : 0
-    const nbCenter =  this.centerCard.length
-
-    let lastV = -1
-    let sameVal = 0
- 
-    let cptCanPlay = 0
-    
-    this.handTp.forEach( c => {
-
-      if( lastV === getValue(c) )
-        sameVal++
-      else 
-        sameVal = 0
-
-
-        /*
-          can play card if val is greater and nbCard grerater or equal ( nb card means cards with same value ) OR val equal and nbcard greater
-        */
-
-      let shaded : boolean = ! ( (getValue(c) > valMin && sameVal + 1 >= nbCenter ) || ( getValue(c) >= valMin && sameVal + 1 > nbCenter ) )
-
-      if( getValue(c) == 0 ){//TODO use enum : if is a 2 can play
-        shaded = sameVal + 2 < nbCenter
-      }
-
-      if( !shaded ) 
-        cptCanPlay++
-       
-      this.myHand.push( { val:c,shaded:shaded,up:false,selectPrec:sameVal } )
-      lastV = getValue(c)
-    })
-    return cptCanPlay
+  pass(){
+    this.presidentService.sendCards([])
   }
+
+  
 }
