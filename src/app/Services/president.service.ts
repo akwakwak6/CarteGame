@@ -88,7 +88,7 @@ export class PresidentService {
   }
 
   quitTable(){
-    console.log("quit table "+this.idTable)
+    this._event.close()
   }
 
   sendReady(){
@@ -111,13 +111,26 @@ export class PresidentService {
 
     let lastV = -1
     let sameVal = 0
+
     
     this._tableData.myHand.forEach( c => {
 
-      if( !this._tableData.me.isPlaying ){
-        myHand.push( { val:c,shaded:false,canPlay:false,up:false,selectPrec:0 } )
+      const show = this._tableData.newCards.includes(c)
+
+
+      //if not my turn just show card
+      if( !this._tableData.me.isPlaying ){//TODO move this to better place
+        myHand.push( { val:c,shaded:false,canPlay:false,up:show,selectPrec:0 } )
         return
       }
+
+      //if have to select cards to exchange
+      if( this._tableData.changeCards.length > 0  ){//TODO move this to better place
+        const canBeChanged = this._tableData.changeCards.includes(c)
+        myHand.push( { val:c,shaded:!canBeChanged,canPlay:canBeChanged,up:false,selectPrec:0 } )
+        return
+      }
+
 
       if( lastV === getValue(c) )
         sameVal++
@@ -135,7 +148,7 @@ export class PresidentService {
         shaded = sameVal + 2 < nbCenter//TODO affect directely shaded
       }
        
-      myHand.push( { val:c,shaded:shaded,canPlay:!shaded,up:false,selectPrec:sameVal } )
+      myHand.push( { val:c,shaded:shaded,canPlay:!shaded,up:show,selectPrec:sameVal } )
       lastV = getValue(c)
     })
 

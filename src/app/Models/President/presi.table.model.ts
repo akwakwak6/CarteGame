@@ -10,5 +10,6 @@ export interface PresiTableModel {
     myHand : number[]
     showReady : boolean
     me : PresiPlayerModel
-
+    changeCards : number[]
+    newCards : number[]
 }

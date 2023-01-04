@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, createComponent, Input, OnInit } from '@angular/core';
+import { TimeInterval } from 'rxjs/internal/operators/timeInterval';
 import { PresiCardModel } from 'src/app/Models/President/presi.card.model';
 import { PresidentService } from 'src/app/Services/president.service';
 
@@ -11,18 +12,27 @@ export class HandComponent implements OnInit {
 
 
   cardes : PresiCardModel[] = []
+  canMove : boolean = true
 
   constructor(private presidentService : PresidentService) { }
 
   ngOnInit(): void {
-    this.presidentService.cardsObs$.subscribe( cs => this.cardes = cs )
+    this.presidentService.cardsObs$.subscribe( cs => {
+      this.cardes = cs
+      if( cs.some( c => c.up ) ){
+        this.canMove = false
+        setTimeout( () => this.canMove = true, 3000)
+      }
+    })
   }
 
   downCard(){
+    if(!this.canMove) return
     this.cardes = this.cardes.map( c => {c.up = false;return c} )
   }
 
   upCard(index:number){
+    if(!this.canMove) return
     if( this.cardes[index].shaded ) return
     if( !this.cardes[index].canPlay ) return
     this.cardes[index].up = true
@@ -32,6 +42,10 @@ export class HandComponent implements OnInit {
   }
 
   selectCard(index:number){
+
+    if(!this.canMove) return
+
+    if( !this.cardes[index].canPlay ) return
 
     const cs : number[] = []
 

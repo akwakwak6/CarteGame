@@ -61,5 +61,8 @@ export class TableComponent implements OnInit {
     this.presidentService.sendCards([])
   }
 
+  ngOnDestroy() {
+    this.presidentService.quitTable()
+  }
   
 }
