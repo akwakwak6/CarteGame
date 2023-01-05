@@ -8,12 +8,12 @@ export class MaimSseService {
 
   private _event! : EventSource
 
-  //TODO get list when connect OK, when disconnect close event,then reopen on sub. => so put all in subscribe mth
+  
   constructor() {
     
   }
 
-  /*
+  /*//TODO use observavle
   methode generique to subscribe to event from API
 
   para1 : event name ( object name send from API ) 

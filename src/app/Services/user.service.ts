@@ -25,14 +25,12 @@ export class UserService {
   login(u:UserLoginModel){
     this._httpClient.post<UserModel>(this._url+"login",u).subscribe( (r: UserModel) => {
       this.logIn(r)
-      this._router.navigate( [ "/home" ] )
     })
   }
 
   register(u:UserRegisterModel){
     this._httpClient.post<UserModel>(this._url+"register",u).subscribe( (r: UserModel) => {
       this.logIn(r)
-      this._router.navigate( [ "/home" ] ) 
     })
   }
 
@@ -40,6 +38,7 @@ export class UserService {
     console.log(u);
     this._user.next(u)
     localStorage.setItem('token', u.token);
+    this._router.navigate( [ "/home" ] )
   }
 
   logOut(){

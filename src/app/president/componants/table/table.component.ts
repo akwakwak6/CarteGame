@@ -5,7 +5,6 @@ import { PresiCardModel } from 'src/app/Models/President/presi.card.model';
 import { PresiPlayerModel } from 'src/app/Models/President/presi.player.model';
 import { PresiTableModel } from 'src/app/Models/President/presi.table.model';
 import { PresidentService } from 'src/app/Services/president.service';
-import { getValue } from 'src/app/share/helper/cardsHelper';
 
 @Component({
   selector: 'app-table',
@@ -14,10 +13,6 @@ import { getValue } from 'src/app/share/helper/cardsHelper';
 })
 export class TableComponent implements OnInit {
 
-  myHand : PresiCardModel[] = []
-  tableID : number = 0
-
-  handTp : number[] = []
   centerCard : number[] = []
   players : PresiPlayerModel[] = []
   showReady : boolean = false
@@ -28,9 +23,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params:any) => {
-      this.tableID = Number( params.get('id') )
-      this.presidentService.joinPresiTable(this.tableID).subscribe( t => this.update(t) )
-      console.log("joinPresiTable");
+      this.presidentService.joinPresiTable( Number( params.get('id') ) ).subscribe( t => this.update(t) )
     });
   }
 
@@ -38,11 +31,8 @@ export class TableComponent implements OnInit {
     this._router.navigate(['..'])
   }
 
-  private update(data:PresiTableModel){
-    console.log( data )
-    
+  private update(data:PresiTableModel){    
     this.players = data.players
-    //this.handTp = data.myHand//TODO var useless remove it send in para
     this.centerCard = data.centerCarte
     this.showReady = data.showReady
     this.me = data.me
@@ -51,7 +41,6 @@ export class TableComponent implements OnInit {
   clickOK(){
       const m = () => {
         this.presidentService.sendReady()
-        //this.presidentService.sendCards([0,1,2,3])
       }
       m.bind(this)
       return m

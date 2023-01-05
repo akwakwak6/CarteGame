@@ -1,4 +1,3 @@
-import { TableModel } from "../table.model";
 import { PresiPlayerModel } from "./presi.player.model";
 
 export interface PresiTableModel {
