@@ -66,13 +66,16 @@ export class PresidentService {
 
   sendReady(){
     //TODO use token
-    //TODO check show ready ?
+    if( ! this._tableData.showReady) return
+
     this._httpClient.get( `${this._url}ready?tableId=${this.idTable}&playerId=${this.playerId}`).subscribe( )
   }
 
   //TODO use token
   sendCards(cards : number[]){
-    if( this._tableData.me.isPlaying )
+    if( !this._tableData.me.isPlaying ) return
+    if( this._tableData.changeCards.length != 0 && cards.length == 0 )  return
+
       this._httpClient.post( `${this._url}setCards?tableId=${this.idTable}&playerId=${this.playerId}`,cards).subscribe( )
   }
 
