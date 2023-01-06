@@ -42,6 +42,7 @@ export class PresidentService {
     let token : string = localStorage.getItem('token') ?? "null";
 
     this._event = new EventSource(this._url+"joinTable?tableId="+id+"&token="+token)
+    
     this._event.onerror= (er) => {
       console.log(er)
       this._event.close()
@@ -76,7 +77,7 @@ export class PresidentService {
     if( !this._tableData.me.isPlaying ) return
     if( this._tableData.changeCards.length != 0 && cards.length == 0 )  return
 
-      this._httpClient.post( `${this._url}setCards?tableId=${this.idTable}&playerId=${this.playerId}`,cards).subscribe( )
+    this._httpClient.post( `${this._url}setCards?tableId=${this.idTable}&playerId=${this.playerId}`,cards).subscribe( )
   }
 
   private makeMyHand():PresiCardModel[]{
@@ -91,6 +92,7 @@ export class PresidentService {
     
     this._tableData.myHand.forEach( c => {
 
+      //show new cards from other players
       const show = this._tableData.newCards.includes(c)
 
       //if not my turn just show card
