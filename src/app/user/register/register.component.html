@@ -24,6 +24,7 @@
             <span class="errorMsg" *ngIf="form.get('password2')?.touched && form.errors?.['notsame']">passwords different</span>
         </div>
         <button type="submit" >Login up</button>
+        <span class="errorMsg" *ngIf="loginError">register error, login already used</span>
     </form>
 
     <a routerLink="../login">login in</a>

@@ -16,6 +16,7 @@
             <span class="errorMsg" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']">Le champs est requis</span>
         </div>
         <button type="submit" >Login in</button>
+        <span class="errorMsg" *ngIf="loginError">login error</span>
     </form>
 
     <!-- //TODO forget password -->

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserRegisterModel } from 'src/app/Models/User/user.register.model';
 import { UserService } from 'src/app/Services/user.service';
 
@@ -10,9 +11,10 @@ import { UserService } from 'src/app/Services/user.service';
 })
 export class RegisterComponent implements OnInit {
 
-  form : FormGroup;
+  form : FormGroup
+  loginError : boolean = false
 
-  constructor(private _fb : FormBuilder, private _usrService : UserService) {
+  constructor(private _fb : FormBuilder, private _usrService : UserService,private _router : Router) {
     this.form = this._fb.group({
       pseudo : ["aa", [Validators.required]],//TODO remove default value by null
       password : ["aa", [Validators.required]],
@@ -35,7 +37,14 @@ export class RegisterComponent implements OnInit {
       pwd : this.form.value.password
     }
 
-    this._usrService.register(u)
+    this._usrService.register(u).subscribe( (r:Boolean) => {
+      if(r){
+        this._router.navigate( [ "/home" ] )
+      }else{
+        this.form.reset()
+        this.loginError = true;
+      }
+    })
 
   }
 

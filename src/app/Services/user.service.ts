@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserLoginModel } from '../Models/User/user.sendLogin.model';
 import { UserRegisterModel } from '../Models/User/user.register.model';
 import { SETTING } from '../share/consts/Setting';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -20,25 +20,44 @@ export class UserService {
 
   user = this._user.asObservable()
 
-  constructor(private _httpClient : HttpClient,private _router: Router) { }
+  constructor(private _httpClient : HttpClient) { }
 
-  login(u:UserLoginModel){
-    this._httpClient.post<UserModel>(this._url+"login",u).subscribe( (r: UserModel) => {
-      this.logIn(r)
+  login(u:UserLoginModel):Observable<Boolean>{
+    const subjet = new Subject<boolean>()
+    this._httpClient.post<UserModel>(this._url+"login",u).subscribe( {
+      next : r => {
+        this.logIn(r)
+        subjet.next(true)
+      },
+      error : e => {
+        console.log(e)
+        subjet.next(false)
+      }
+      
     })
+    return subjet.asObservable()
   }
 
-  register(u:UserRegisterModel){
-    this._httpClient.post<UserModel>(this._url+"register",u).subscribe( (r: UserModel) => {
-      this.logIn(r)
+  register(u:UserRegisterModel):Observable<Boolean>{//TODO if faild ?
+    const subjet = new Subject<boolean>()
+    this._httpClient.post<UserModel>(this._url+"register",u).subscribe({
+      next : r => {
+        this.logIn(r)
+        subjet.next(true)
+      },
+      error : e => {
+        console.log(e)
+        subjet.next(false)
+      }
     })
+    return subjet.asObservable()
   }
 
-  private logIn(u : UserModel){
+  private logIn(u : UserModel){//TODO if login faild ?
     console.log(u);
     this._user.next(u)
     localStorage.setItem('token', u.token);
-    this._router.navigate( [ "/home" ] )
+    //this._router.navigate( [ "/home" ] )
   }
 
   logOut(){
