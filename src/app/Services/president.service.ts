@@ -1,14 +1,13 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
-import { PresiCardModel } from '../Models/President/presi.card.model';
-import { PresiTableModel } from '../Models/President/presi.table.model';
-import { PresiTableListModel } from '../Models/President/presi.tableList.model';
-import { UserModel } from '../Models/User/user.login.model';
-import { SETTING } from '../share/consts/Setting';
-import { getValue } from '../share/helper/cardsHelper';
-import { UserService } from './user.service';
+import { HttpClient } from '@angular/common/http'
+import { Injectable } from '@angular/core'
+import { Router } from '@angular/router'
+import { Observable, Subject } from 'rxjs'
+import { PresiCardModel } from '../Models/President/presi.card.model'
+import { PresiTableModel } from '../Models/President/presi.table.model'
+import { UserModel } from '../Models/User/user.login.model'
+import { SETTING } from '../share/consts/Setting'
+import { getValue } from '../share/helper/cardsHelper'
+import { UserService } from './user.service'
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +21,12 @@ export class PresidentService {
   private _tableDataSub = new Subject<PresiTableModel>();
   private _CardsSub = new Subject<PresiCardModel[]>();
 
-  cardsObs$ = this._CardsSub.asObservable()
-
   private playerId : number | null = null
   private idTable : number | null = null
-
-  constructor(private _userService : UserService,private _httpClient : HttpClient,private _router: Router) { }
+  
+  cardsObs$ = this._CardsSub.asObservable()
+  
+  constructor(private _httpClient : HttpClient,private _router: Router) { }
 
   createTable(){
     //create a new table of president, must be connected so send token
@@ -42,6 +41,17 @@ export class PresidentService {
     let token : string = localStorage.getItem('token') ?? "null";
 
     this._event = new EventSource(this._url+"joinTable?tableId="+id+"&token="+token)
+    //TODO use TOKEN in header : FROM chatGPT
+    /*
+    
+    //
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.getToken()}`
+    });
+
+    const eventSource = new EventSource(url, { headers })
+    
+    */
     
     this._event.onerror= (er) => {
       console.log(er)
